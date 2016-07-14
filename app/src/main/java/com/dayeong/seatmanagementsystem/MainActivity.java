@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
@@ -45,11 +46,24 @@ public class MainActivity extends AppCompatActivity {
             double latitude = gps.getLatitude();
             double longitude = gps.getLongitude();
 
-            mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(latitude, longitude), 0, true);
+            MapPoint current = MapPoint.mapPointWithGeoCoord(latitude, longitude);
+            mapView.setMapCenterPointAndZoomLevel(current, 0, true);
+            makeMarker(mapView, current, "Current");
 
         } else {
             gps.showSettingsAlert();
         }
+    }
+
+    public void makeMarker(MapView mapView, MapPoint mapPoint, String name) {
+        MapPOIItem marker = new MapPOIItem();
+        marker.setItemName(name);
+        marker.setTag(0);
+        marker.setMapPoint(mapPoint);
+        marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+
+        mapView.addPOIItem(marker);
     }
 
     @Override
