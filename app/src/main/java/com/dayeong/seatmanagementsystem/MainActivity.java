@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getGps(MapView mapView) {
-        GpsInfo gps = new GpsInfo(MainActivity.this);
+        GPSInfo gps = new GPSInfo(MainActivity.this);
 
         if (gps.isGetLocation()) {
             double latitude = gps.getLatitude();
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             mapView.setMapCenterPointAndZoomLevel(current, 0, true);
 
             mapView.removeAllPOIItems();
-            makeCurrentMarker(mapView, current, "Current");
+            makeCurrentMarker(mapView, current);
             makeMarker(mapView, MapPoint.mapPointWithGeoCoord(latitude+0.001, longitude+0.001), "HIHI");
             makeMarker(mapView, MapPoint.mapPointWithGeoCoord(latitude-0.001, longitude-0.0001), "BYEBYE");
 
@@ -60,17 +60,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void makeCurrentMarker(MapView mapView, MapPoint mapPoint, String name) {
+    public void makeCurrentMarker(MapView mapView, MapPoint mapPoint) {
         MapPOIItem marker = new MapPOIItem();
-        marker.setItemName(name);
+        marker.setItemName("현재위치");
         marker.setTag(0);
         marker.setMapPoint(mapPoint);
-        marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
-        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-        marker.setShowDisclosureButtonOnCalloutBalloon(false);
+        marker.setMarkerType(MapPOIItem.MarkerType.RedPin);
+        marker.setShowCalloutBalloonOnTouch(false);
 
         mapView.addPOIItem(marker);
-        mapView.selectPOIItem(marker, true);
     }
 
     public void makeMarker(MapView mapView, MapPoint mapPoint, String name) {

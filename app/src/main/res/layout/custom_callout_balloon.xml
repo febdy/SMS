@@ -30,7 +30,6 @@
             android:layout_gravity="center_horizontal"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="자세히 보기"
             android:textColor="#ff7f7f7f"
             android:textSize="14sp" />
     </LinearLayout>

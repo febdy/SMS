@@ -5,17 +5,21 @@ import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 /**
  * Created by Dayeong on 2016-07-14.
  */
-public class GpsInfo extends Service implements LocationListener {
+public class GPSInfo extends Service implements LocationListener {
 
     private final Context mContext;
 
@@ -40,12 +44,19 @@ public class GpsInfo extends Service implements LocationListener {
 
     protected LocationManager locationManager;
 
-    public GpsInfo(Context context) {
+    public GPSInfo(Context context) {
         this.mContext = context;
         getLocation();
     }
 
     public Location getLocation() {
+
+        if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return location;
+        }
+
         try {
             locationManager = (LocationManager) mContext
                     .getSystemService(LOCATION_SERVICE);
@@ -108,8 +119,10 @@ public class GpsInfo extends Service implements LocationListener {
      * GPS 종료
      */
     public void stopUsingGPS() {
-        if (locationManager != null) {
-            locationManager.removeUpdates(GpsInfo.this);
+        try {
+            locationManager.removeUpdates(GPSInfo.this);
+        } catch (SecurityException e) {
+            Log.e("PERMISSION_EXCEPTION", "PERMISSION_NOT_GRANTED");
         }
     }
 
@@ -174,23 +187,24 @@ public class GpsInfo extends Service implements LocationListener {
         return null;
     }
 
+
+    @Override
     public void onLocationChanged(Location location) {
-        // TODO Auto-generated method stub
 
     }
 
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        // TODO Auto-generated method stub
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
 
     }
 
-    public void onProviderEnabled(String provider) {
-        // TODO Auto-generated method stub
+    @Override
+    public void onProviderEnabled(String s) {
 
     }
 
-    public void onProviderDisabled(String provider) {
-        // TODO Auto-generated method stub
+    @Override
+    public void onProviderDisabled(String s) {
 
     }
 }

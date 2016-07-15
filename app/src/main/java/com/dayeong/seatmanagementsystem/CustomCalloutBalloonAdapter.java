@@ -20,7 +20,8 @@ class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter {
     @Override
     public View getCalloutBalloon(MapPOIItem poiItem) {
         ((TextView) mCalloutBalloon.findViewById(R.id.title)).setText(poiItem.getItemName());
-        ((TextView) mCalloutBalloon.findViewById(R.id.desc)).setText("자세히보기");
+        ((TextView) mCalloutBalloon.findViewById(R.id.desc)).setText("자세히 보기");
+
         return mCalloutBalloon;
     }
 
