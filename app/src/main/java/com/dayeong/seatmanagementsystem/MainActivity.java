@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         mapView.setDaumMapApiKey("40835261670c49406a6124ee35c9cba8");
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
+        mapView.setCalloutBalloonAdapter(new CustomCalloutBalloonAdapter(getApplicationContext()));
         getGps(mapView);
         mapViewContainer.addView(mapView);
 
@@ -48,17 +49,34 @@ public class MainActivity extends AppCompatActivity {
 
             MapPoint current = MapPoint.mapPointWithGeoCoord(latitude, longitude);
             mapView.setMapCenterPointAndZoomLevel(current, 0, true);
-            makeMarker(mapView, current, "Current");
+
+            mapView.removeAllPOIItems();
+            makeCurrentMarker(mapView, current, "Current");
+            makeMarker(mapView, MapPoint.mapPointWithGeoCoord(latitude+0.001, longitude+0.001), "HIHI");
+            makeMarker(mapView, MapPoint.mapPointWithGeoCoord(latitude-0.001, longitude-0.0001), "BYEBYE");
 
         } else {
             gps.showSettingsAlert();
         }
     }
 
-    public void makeMarker(MapView mapView, MapPoint mapPoint, String name) {
+    public void makeCurrentMarker(MapView mapView, MapPoint mapPoint, String name) {
         MapPOIItem marker = new MapPOIItem();
         marker.setItemName(name);
         marker.setTag(0);
+        marker.setMapPoint(mapPoint);
+        marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+        marker.setShowDisclosureButtonOnCalloutBalloon(false);
+
+        mapView.addPOIItem(marker);
+        mapView.selectPOIItem(marker, true);
+    }
+
+    public void makeMarker(MapView mapView, MapPoint mapPoint, String name) {
+        MapPOIItem marker = new MapPOIItem();
+        marker.setItemName(name);
+        marker.setTag(1);
         marker.setMapPoint(mapPoint);
         marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
         marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
