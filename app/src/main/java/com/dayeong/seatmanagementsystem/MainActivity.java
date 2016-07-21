@@ -1,5 +1,6 @@
 package com.dayeong.seatmanagementsystem;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +14,7 @@ import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MapView.POIItemEventListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         mapView.setDaumMapApiKey("40835261670c49406a6124ee35c9cba8");
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
+        mapView.setPOIItemEventListener(this);
         mapView.setCalloutBalloonAdapter(new CustomCalloutBalloonAdapter(getApplicationContext()));
         getGps(mapView);
         mapViewContainer.addView(mapView);
@@ -52,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
             mapView.removeAllPOIItems();
             makeCurrentMarker(mapView, current);
-            makeMarker(mapView, MapPoint.mapPointWithGeoCoord(latitude+0.001, longitude+0.001), "HIHI");
-            makeMarker(mapView, MapPoint.mapPointWithGeoCoord(latitude-0.001, longitude-0.0001), "BYEBYE");
+            makeMarker(mapView, MapPoint.mapPointWithGeoCoord(latitude + 0.001, longitude + 0.001), "HIHI");
+            makeMarker(mapView, MapPoint.mapPointWithGeoCoord(latitude - 0.001, longitude - 0.0001), "BYEBYE");
 
         } else {
             gps.showSettingsAlert();
@@ -102,5 +104,26 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
+
+    }
+
+    @Override
+    public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
+        Intent intent = new Intent(MainActivity.this, SeatAvailabilityActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
+
+    }
+
+    @Override
+    public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
+
     }
 }
