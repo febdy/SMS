@@ -13,10 +13,11 @@
         android:theme="@style/AppTheme.NoActionBar.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_seat"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            android:title=""
             app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
@@ -24,11 +25,17 @@
     <include layout="@layout/content_seat_availability" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="90dp"
+        android:src="@android:drawable/stat_notify_sync_noanim"
+        app:fabSize="mini"
+        app:layout_anchor="@+id/toolbar_seat"
+        app:layout_anchorGravity="bottom|right|end" />
+
+    <include layout="@layout/floor_fab_layout" />
 
 </android.support.design.widget.CoordinatorLayout>

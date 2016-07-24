@@ -21,7 +21,6 @@
         </activity>
         <activity
             android:name=".SeatAvailabilityActivity"
-            android:label="@string/title_activity_seat_availability"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
