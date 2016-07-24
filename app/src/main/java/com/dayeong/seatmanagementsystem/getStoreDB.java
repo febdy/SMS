@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -87,16 +88,19 @@ public class GetStoreDB extends AsyncTask<String, Integer, String> {
             }
 
             StoreInfo storeInfo = storeInfoList.get(0);
+            int tableNum = storeInfo.getTableNum();
+            int available = 0;
 
             activity.setTitle(storeInfo.getStoreName());
 
-            for (int i = 1; i <= storeInfo.getTableNum(); i++) {
+            for (int i = 1; i <= tableNum; i++) {
                 int tableStatus = storeInfo.getTablesStatus()[i];
                 String btnID = "btn_table_" + i;
                 int resID = context.getResources().getIdentifier(btnID, "id", "com.dayeong.seatmanagementsystem");
                 Button btnTable = (Button) activity.findViewById(resID);
 
                 if (tableStatus == 1) {
+                    available += 1;
                     btnTable.setBackgroundColor(Color.RED);
                 } else if (tableStatus == 0) {
                     btnTable.setBackgroundColor(Color.GREEN);
@@ -104,6 +108,9 @@ public class GetStoreDB extends AsyncTask<String, Integer, String> {
                     btnTable.setBackgroundColor(Color.YELLOW);
                 }
             }
+
+            TextView tableAvailable = (TextView) activity.findViewById(R.id.table_available);
+            tableAvailable.setText(available + "/" + tableNum);
 
         } catch (JSONException e) {
             e.printStackTrace();

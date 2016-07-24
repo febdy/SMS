@@ -17,7 +17,7 @@
         android:id="@+id/txtView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="인원 현황"
+        android:text="자리 현황"
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/btn_table_2"
         android:layout_alignStart="@+id/btn_table_2"
