@@ -20,11 +20,14 @@ public class SeatAvailabilityActivity extends AppCompatActivity {
         Toolbar toolbarSeat = (Toolbar) findViewById(R.id.toolbar_seat);
         setSupportActionBar(toolbarSeat);
 
+        Bundle bundle = getIntent().getExtras();
+        final String storeName = bundle.getString("storeName");
+
         FloatingActionButton fabRefresh = (FloatingActionButton) findViewById(R.id.fab_refresh);
         fabRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getStoreDB();
+                getStoreDB(storeName);
             }
         });
 
@@ -53,7 +56,7 @@ public class SeatAvailabilityActivity extends AppCompatActivity {
             }
         });
 
-        getStoreDB();
+        getStoreDB(storeName);
 
     }
 
@@ -61,8 +64,8 @@ public class SeatAvailabilityActivity extends AppCompatActivity {
         this.getSupportActionBar().setTitle(title);
     }
 
-    public void getStoreDB() {
-        task = new GetStoreDB(getApplicationContext(), SeatAvailabilityActivity.this);
+    public void getStoreDB(String storeName) {
+        task = new GetStoreDB(getApplicationContext(), SeatAvailabilityActivity.this, storeName);
         task.execute(url);
     }
 }

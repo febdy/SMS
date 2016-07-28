@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
@@ -20,7 +20,8 @@ import net.daum.mf.map.api.MapView;
 
 public class MainActivity extends AppCompatActivity implements MapView.POIItemEventListener {
 
-    String[] itemArrayList = {"test1", "test2", "test3", "test4", "test5"};
+    String[] storeList = {"test", "test1", "tell", "apple", "banana", "milk"};
+    String storeName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         final MapView mapView = new MapView(this);
 
@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
 
             mapView.removeAllPOIItems();
             makeCurrentMarker(mapView, current);
-            makeMarker(mapView, MapPoint.mapPointWithGeoCoord(latitude + 0.001, longitude + 0.001), "HIHI");
-            makeMarker(mapView, MapPoint.mapPointWithGeoCoord(latitude - 0.001, longitude - 0.0001), "BYEBYE");
+            makeMarker(mapView, MapPoint.mapPointWithGeoCoord(latitude + 0.001, longitude + 0.001), "test1");
+            makeMarker(mapView, MapPoint.mapPointWithGeoCoord(latitude - 0.001, longitude - 0.0001), "test2");
 
         } else {
             gps.showSettingsAlert();
@@ -100,15 +100,29 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
         final ArrayAdapterSearchView searchView = (ArrayAdapterSearchView) MenuItemCompat.getActionView(searchItem);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, itemArrayList);
+                android.R.layout.simple_list_item_1, storeList);
         searchView.setAdapter(adapter);
 
         searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String searchString = (String) parent.getItemAtPosition(position);
-                searchView.setText(parent.getItemAtPosition(position).toString()); // TODO: 커서위치 뒤로
-                Toast.makeText(MainActivity.this, "you clicked " + searchString, Toast.LENGTH_SHORT).show();
+                searchView.setText(searchString.toString()); // TODO: 커서위치 뒤로
+                storeName = searchString;
+                startSearchResultActivity(storeName);
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String searchWord) {
+                startSearchResultActivity(searchWord);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
             }
         });
 
@@ -136,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
     @Override
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
         Intent intent = new Intent(MainActivity.this, SeatAvailabilityActivity.class);
+        intent.putExtra("storeName", mapPOIItem.getItemName());
         startActivity(intent);
     }
 
@@ -147,5 +162,11 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
     @Override
     public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
 
+    }
+
+    private void startSearchResultActivity(String storeName) {
+        Intent intent = new Intent(MainActivity.this, SearchResultActivity.class);
+        intent.putExtra("storeName", storeName);
+        startActivity(intent);
     }
 }

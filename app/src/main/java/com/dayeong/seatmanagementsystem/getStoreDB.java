@@ -5,8 +5,10 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,20 +18,21 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
 /**
  * Created by Dayeong on 2016-07-24.
  */
 public class GetStoreDB extends AsyncTask<String, Integer, String> {
 
-    ArrayList<StoreInfo> storeInfoList = new ArrayList<>();
+    StoreInfo storeInfo;
     Context context;
     Activity activity;
+    String storeName;
 
-    public GetStoreDB(Context context, Activity activity) {
+    public GetStoreDB(Context context, Activity activity, String storeName) {
         this.context = context;
         this.activity = activity;
+        this.storeName = storeName;
     }
 
     @Override
@@ -70,50 +73,60 @@ public class GetStoreDB extends AsyncTask<String, Integer, String> {
         int table_num;
         int[] tablesStatus;
 
-        try {
-            JSONObject root = new JSONObject(str);
-            JSONArray jsonArray = root.getJSONArray("results");
+        if (storeName != null) {
+            try {
+                JSONObject root = new JSONObject(str);
+                JSONArray jsonArray = root.getJSONArray("results");
 
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                store_name = jsonObject.getString("store_name");
-                table_num = jsonObject.getInt("table_num");
-                tablesStatus = new int[table_num + 1];
-                tablesStatus[0] = 0;
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    store_name = jsonObject.getString("store_name");
 
-                for (int j = 1; j <= table_num; j++) {
-                    tablesStatus[j] = jsonObject.getInt("table_" + String.valueOf(j));
+                    if (storeName.equals(store_name)) {
+                        table_num = jsonObject.getInt("table_num");
+                        tablesStatus = new int[table_num + 1];
+                        tablesStatus[0] = 0;
+
+                        for (int j = 1; j <= table_num; j++) {
+                            tablesStatus[j] = jsonObject.getInt("table_" + String.valueOf(j));
+                        }
+
+                        storeInfo = new StoreInfo(store_name, table_num, tablesStatus);
+
+                    }
                 }
-                storeInfoList.add(new StoreInfo(store_name, table_num, tablesStatus));
-            }
 
-            StoreInfo storeInfo = storeInfoList.get(0);
-            int tableNum = storeInfo.getTableNum();
-            int available = 0;
+                int tableNum = storeInfo.getTableNum();
+                int available = 0;
 
-            activity.setTitle(storeInfo.getStoreName());
+                activity.setTitle(storeInfo.getStoreName());
 
-            for (int i = 1; i <= tableNum; i++) {
-                int tableStatus = storeInfo.getTablesStatus()[i];
-                String btnID = "btn_table_" + i;
-                int resID = context.getResources().getIdentifier(btnID, "id", "com.dayeong.seatmanagementsystem");
-                Button btnTable = (Button) activity.findViewById(resID);
+                for (int i = 1; i <= tableNum; i++) {
+                    int tableStatus = storeInfo.getTablesStatus()[i];
+                    String btnID = "btn_table_" + i;
+                    int resID = context.getResources().getIdentifier(btnID, "id", "com.dayeong.seatmanagementsystem");
+                    Button btnTable = (Button) activity.findViewById(resID);
 
-                if (tableStatus == 1) {
-                    available += 1;
-                    btnTable.setBackgroundColor(Color.RED);
-                } else if (tableStatus == 0) {
-                    btnTable.setBackgroundColor(Color.GREEN);
-                } else {
-                    btnTable.setBackgroundColor(Color.YELLOW);
+                    if (tableStatus == 1) {
+                        available += 1;
+                        btnTable.setBackgroundColor(Color.RED);
+                    } else if (tableStatus == 0) {
+                        btnTable.setBackgroundColor(Color.GREEN);
+                    } else {
+                        btnTable.setBackgroundColor(Color.YELLOW);
+                    }
+
+                    btnTable.setVisibility(View.VISIBLE);
                 }
+
+                TextView tableAvailable = (TextView) activity.findViewById(R.id.table_available);
+                tableAvailable.setText(available + "/" + tableNum);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-
-            TextView tableAvailable = (TextView) activity.findViewById(R.id.table_available);
-            tableAvailable.setText(available + "/" + tableNum);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } else {
+            Toast.makeText(activity, "Store Name is NULL", Toast.LENGTH_SHORT).show();
         }
 
     }
