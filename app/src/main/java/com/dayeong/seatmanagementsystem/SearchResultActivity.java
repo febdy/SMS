@@ -17,6 +17,7 @@ public class SearchResultActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    double latitude, longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,8 @@ public class SearchResultActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         String searchStoreName = bundle.getString("storeName");
+        latitude = bundle.getDouble("latitude");
+        longitude = bundle.getDouble("latitude");
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
@@ -34,7 +37,7 @@ public class SearchResultActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
-        mAdapter = new SearchResultAdapter(getApplicationContext(), searchResultItemList);
+        mAdapter = new SearchResultAdapter(getApplicationContext(), searchResultItemList, latitude, longitude);
         mRecyclerView.setAdapter(mAdapter);
 
         makeStoreDB();
@@ -58,30 +61,30 @@ public class SearchResultActivity extends AppCompatActivity {
         for (int i = 0; i < storeDB.size(); i++) {
             SearchResultItem searchResultItem = storeDB.get(i);
 
-            if(searchResultItem.getStoreName().contains(searchStoreName))
+            if (searchResultItem.getStoreName().contains(searchStoreName))
                 searchResultItemList.add(searchResultItem);
         }
 
         mAdapter.notifyDataSetChanged();
     }
 
-    private void makeStoreDB(){
-        SearchResultItem searchResultItem = new SearchResultItem("test0", 0);
+    private void makeStoreDB() {
+        SearchResultItem searchResultItem = new SearchResultItem("test0", latitude + 0.001, longitude - 0.001);
         storeDB.add(searchResultItem);
 
-        searchResultItem = new SearchResultItem("test1", 0);
+        searchResultItem = new SearchResultItem("test1", latitude - 0.001, longitude + 0.001);
         storeDB.add(searchResultItem);
 
-        searchResultItem = new SearchResultItem("test2", 0);
+        searchResultItem = new SearchResultItem("test2", latitude + 0.0015, longitude - 0.001);
         storeDB.add(searchResultItem);
 
-        searchResultItem = new SearchResultItem("test3", 0);
+        searchResultItem = new SearchResultItem("test3", latitude + 0.001, longitude - 0.0015);
         storeDB.add(searchResultItem);
 
-        searchResultItem = new SearchResultItem("test4", 0);
+        searchResultItem = new SearchResultItem("test4", latitude - 0.0016, longitude - 0.001);
         storeDB.add(searchResultItem);
 
-        searchResultItem = new SearchResultItem("test5", 0);
+        searchResultItem = new SearchResultItem("test5", latitude + 0.001, longitude + 0.0015);
         storeDB.add(searchResultItem);
     }
 }

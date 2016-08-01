@@ -6,14 +6,15 @@ package com.dayeong.seatmanagementsystem;
 public class SearchResultItem {
 
     private String storeName;
-    private int distance;
+    private double latitude, longitude;
 
     public SearchResultItem() {
     }
 
-    public SearchResultItem(String storeName, int distance) {
+    public SearchResultItem(String storeName, double latitude, double longitude) {
         this.storeName = storeName;
-        this.distance = distance;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public void setStoreName(String storeName) {
@@ -24,12 +25,19 @@ public class SearchResultItem {
         return storeName;
     }
 
-    public void setDistance(int distance) {
-        this.distance = distance;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
-    public int getDistance() {
-        return distance;
+    public double getLatitude() {
+        return latitude;
     }
 
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
 }

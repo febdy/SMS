@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
 
     String[] storeList = {"test", "test1", "tell", "apple", "banana", "milk"};
     String storeName;
+    double latitude = 0;
+    double longitude = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
         GPSInfo gps = new GPSInfo(MainActivity.this);
 
         if (gps.isGetLocation()) {
-            double latitude = gps.getLatitude();
-            double longitude = gps.getLongitude();
+            latitude = gps.getLatitude();
+            longitude = gps.getLongitude();
 
             MapPoint current = MapPoint.mapPointWithGeoCoord(latitude, longitude);
             mapView.setMapCenterPointAndZoomLevel(current, 0, true);
@@ -167,6 +169,8 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
     private void startSearchResultActivity(String storeName) {
         Intent intent = new Intent(MainActivity.this, SearchResultActivity.class);
         intent.putExtra("storeName", storeName);
+        intent.putExtra("latitude", latitude);
+        intent.putExtra("longitude", longitude);
         startActivity(intent);
     }
 }

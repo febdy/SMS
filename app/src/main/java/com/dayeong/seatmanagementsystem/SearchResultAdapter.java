@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder> {
     private ArrayList<SearchResultItem> searchResultItemList;
     private Context context;
+    private double latitude, longitude;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView storeName, distance;
@@ -31,6 +32,13 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         searchResultItemList = mySearchResultItemList;
     }
 
+    public SearchResultAdapter(Context context, ArrayList<SearchResultItem> mySearchResultItemList, double latitude, double longitude) {
+        this.context = context;
+        searchResultItemList = mySearchResultItemList;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     @Override
     public SearchResultAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                              int viewType) {
@@ -42,11 +50,12 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String listStoreName = searchResultItemList.get(position).getStoreName();
-        int listDistance = searchResultItemList.get(position).getDistance();
+        SearchResultItem item = searchResultItemList.get(position);
+        String listStoreName = item.getStoreName();
+        double listDistance = calculateDistance(item.getLatitude(), item.getLongitude());
 
         holder.storeName.setText(listStoreName);
-        holder.distance.setText(String.valueOf(listDistance));
+        holder.distance.setText(String.format("%.2f", listDistance));
     }
 
     @Override
@@ -54,4 +63,26 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         return searchResultItemList.size();
     }
 
+    private double calculateDistance(double itemLatitude, double itemLongitude) {
+        double currentLatitude = this.latitude;
+        double currentLongitude = this.longitude;
+
+        double theta = currentLongitude - itemLongitude;
+        double dist = Math.sin(deg2rad(currentLatitude)) * Math.sin(deg2rad(itemLatitude)) + Math.cos(deg2rad(currentLatitude)) * Math.cos(deg2rad(itemLatitude)) * Math.cos(deg2rad(theta));
+
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        dist = dist * 1.609344; // kilometer
+
+        return dist;
+    }
+
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
+    }
 }
