@@ -6,7 +6,7 @@ package com.dayeong.seatmanagementsystem;
 public class SearchResultItem {
 
     private String storeName;
-    private double latitude, longitude;
+    private double latitude, longitude, distance;
 
     public SearchResultItem() {
     }
@@ -15,6 +15,7 @@ public class SearchResultItem {
         this.storeName = storeName;
         this.latitude = latitude;
         this.longitude = longitude;
+        distance = 0;
     }
 
     public void setStoreName(String storeName) {
@@ -39,5 +40,13 @@ public class SearchResultItem {
 
     public double getLongitude() {
         return longitude;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public double getDistance() {
+        return distance;
     }
 }

@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class SearchResultActivity extends AppCompatActivity {
 
@@ -37,11 +39,12 @@ public class SearchResultActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
-        mAdapter = new SearchResultAdapter(getApplicationContext(), searchResultItemList, latitude, longitude);
+        mAdapter = new SearchResultAdapter(getApplicationContext(), searchResultItemList);
         mRecyclerView.setAdapter(mAdapter);
 
         makeStoreDB();
         setSearchStoreList(searchStoreName);
+        listSort();
 
         mRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
@@ -65,7 +68,52 @@ public class SearchResultActivity extends AppCompatActivity {
                 searchResultItemList.add(searchResultItem);
         }
 
+        //mAdapter.notifyDataSetChanged();
+    }
+
+    public void listSort() {
+        for (int i = 0; i < searchResultItemList.size(); i++) {
+            SearchResultItem item = searchResultItemList.get(i);
+            double distance = calculateDistance(item.getLatitude(), item.getLongitude());
+            searchResultItemList.get(i).setDistance(distance);
+        }
+
+        Collections.sort(searchResultItemList, new Comparator<SearchResultItem>() {
+            @Override
+            public int compare(SearchResultItem o1, SearchResultItem o2) {
+                if (o1.getDistance() > o2.getDistance())
+                    return 1;
+                else if (o1.getDistance() < o2.getDistance())
+                    return -1;
+                else return 0;
+            }
+
+        });
+
         mAdapter.notifyDataSetChanged();
+    }
+
+    private double calculateDistance(double itemLatitude, double itemLongitude) {
+        double currentLatitude = this.latitude;
+        double currentLongitude = this.longitude;
+
+        double theta = currentLongitude - itemLongitude;
+        double dist = Math.sin(deg2rad(currentLatitude)) * Math.sin(deg2rad(itemLatitude)) + Math.cos(deg2rad(currentLatitude)) * Math.cos(deg2rad(itemLatitude)) * Math.cos(deg2rad(theta));
+
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        dist = dist * 1.609344; // kilometer
+
+        return dist;
+    }
+
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
     }
 
     private void makeStoreDB() {
