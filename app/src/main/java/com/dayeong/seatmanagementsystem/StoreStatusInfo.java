@@ -3,16 +3,16 @@ package com.dayeong.seatmanagementsystem;
 /**
  * Created by Dayeong on 2016-07-20.
  */
-public class StoreInfo {
+public class StoreStatusInfo {
 
     private String store_name;
     private int table_num;
     private int[] tablesStatus;
 
-    public StoreInfo() {
+    public StoreStatusInfo() {
     }
 
-    public StoreInfo(String store_name, int table_num, int[] tablesStatus) {
+    public StoreStatusInfo(String store_name, int table_num, int[] tablesStatus) {
         this.store_name = store_name;
         this.table_num = table_num;
         this.tablesStatus = tablesStatus;

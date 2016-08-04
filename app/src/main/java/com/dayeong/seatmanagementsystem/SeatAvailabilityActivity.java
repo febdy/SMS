@@ -64,8 +64,8 @@ public class SeatAvailabilityActivity extends AppCompatActivity {
         this.getSupportActionBar().setTitle(title);
     }
 
-    public void getStoreDB(String storeName) {
-        task = new GetStoreDB(getApplicationContext(), SeatAvailabilityActivity.this, storeName);
+    private void getStoreDB(String storeName) {
+        task = new GetStoreDB(getApplicationContext(), SeatAvailabilityActivity.this, storeName, "getSeat");
         task.execute(url);
     }
 }

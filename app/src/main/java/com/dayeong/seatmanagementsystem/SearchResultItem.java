@@ -7,15 +7,25 @@ public class SearchResultItem {
 
     private String storeName;
     private double latitude, longitude, distance;
+    private int table_num;
 
     public SearchResultItem() {
     }
 
-    public SearchResultItem(String storeName, double latitude, double longitude) {
+    public SearchResultItem(String storeName, double latitude, double longitude, int table_num) {
         this.storeName = storeName;
         this.latitude = latitude;
         this.longitude = longitude;
         distance = 0;
+        this.table_num = table_num;
+    }
+
+    public SearchResultItem(String storeName, double latitude, double longitude, int table_num, double distance) {
+        this.storeName = storeName;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.distance = distance;
+        this.table_num = table_num;
     }
 
     public void setStoreName(String storeName) {
@@ -48,5 +58,13 @@ public class SearchResultItem {
 
     public double getDistance() {
         return distance;
+    }
+
+    public void setTableNum(int table_num) {
+        this.table_num = table_num;
+    }
+
+    public int getTableNum() {
+        return table_num;
     }
 }

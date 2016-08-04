@@ -18,12 +18,17 @@ import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
-public class MainActivity extends AppCompatActivity implements MapView.POIItemEventListener {
+import java.util.ArrayList;
 
-    String[] storeList = {"test", "test1", "tell", "apple", "banana", "milk"};
+public class MainActivity extends AppCompatActivity implements MapView.POIItemEventListener {
+    GetStoreDB task;
+    String url = "http://175.126.112.111/storedata.php";
+
+    ArrayList<String> storeNameList;
     String storeName;
     double latitude = 0;
     double longitude = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
                 getGps(mapView);
             }
         });
+
+        getIndex();
+        storeNameList = task.getStoreNameList();
 
         mapView.setDaumMapApiKey("40835261670c49406a6124ee35c9cba8");
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
@@ -102,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
         final ArrayAdapterSearchView searchView = (ArrayAdapterSearchView) MenuItemCompat.getActionView(searchItem);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, storeList);
+                android.R.layout.simple_list_item_1, storeNameList);
         searchView.setAdapter(adapter);
 
         searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -172,5 +180,10 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
         intent.putExtra("latitude", latitude);
         intent.putExtra("longitude", longitude);
         startActivity(intent);
+    }
+
+    private void getIndex() {
+        task = new GetStoreDB(getApplicationContext(), MainActivity.this, "getIndex");
+        task.execute(url);
     }
 }
