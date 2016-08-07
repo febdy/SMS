@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Created by Dayeong on 2016-07-27.
  */
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder> {
-    private ArrayList<SearchResultItem> searchResultItemList;
+    private ArrayList<StoreInfo> storeInfoList;
     private Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -26,9 +26,9 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         }
     }
 
-    public SearchResultAdapter(Context context, ArrayList<SearchResultItem> mySearchResultItemList) {
+    public SearchResultAdapter(Context context, ArrayList<StoreInfo> myStoreInfoList) {
         this.context = context;
-        searchResultItemList = mySearchResultItemList;
+        storeInfoList = myStoreInfoList;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        SearchResultItem item = searchResultItemList.get(position);
+        StoreInfo item = storeInfoList.get(position);
         String listStoreName = item.getStoreName();
         Double listDistance = item.getDistance();
 
@@ -52,7 +52,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     @Override
     public int getItemCount() {
-        return searchResultItemList.size();
+        return storeInfoList.size();
     }
 
 }

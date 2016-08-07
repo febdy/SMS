@@ -18,13 +18,18 @@ import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements MapView.POIItemEventListener {
+public class MainActivity extends AppCompatActivity implements MapView.POIItemEventListener, AsyncResponse {
     GetStoreDB task;
     String url = "http://175.126.112.111/storedata.php";
 
-    ArrayList<String> storeNameList;
+    ArrayList<String> storeNameList = new ArrayList<>();
+    MapView mapView;
     String storeName;
     double latitude = 0;
     double longitude = 0;
@@ -37,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final MapView mapView = new MapView(this);
+        mapView = new MapView(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_gps);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -47,8 +52,7 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
             }
         });
 
-        getIndex();
-        storeNameList = task.getStoreNameList();
+        executeDB();
 
         mapView.setDaumMapApiKey("40835261670c49406a6124ee35c9cba8");
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
@@ -71,9 +75,6 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
 
             mapView.removeAllPOIItems();
             makeCurrentMarker(mapView, current);
-            makeMarker(mapView, MapPoint.mapPointWithGeoCoord(latitude + 0.001, longitude + 0.001), "test1");
-            makeMarker(mapView, MapPoint.mapPointWithGeoCoord(latitude - 0.001, longitude - 0.0001), "test2");
-
         } else {
             gps.showSettingsAlert();
         }
@@ -103,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
@@ -182,8 +182,34 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
         startActivity(intent);
     }
 
-    private void getIndex() {
-        task = new GetStoreDB(getApplicationContext(), MainActivity.this, "getIndex");
+    private void executeDB() {
+        task = new GetStoreDB(getApplicationContext(), MainActivity.this);
+        task.listener = this;
         task.execute(url);
+    }
+
+    @Override
+    public void processFinish(String str) {
+        String store_name;
+        double storeLatitude;
+        double storeLongitude;
+
+        try {
+            JSONObject root = new JSONObject(str);
+            JSONArray jsonArray = root.getJSONArray("results");
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                store_name = jsonObject.getString("store_name");
+                storeLatitude = jsonObject.getDouble("latitude");
+                storeLongitude = jsonObject.getDouble("longitude");
+
+                storeNameList.add(store_name);
+                makeMarker(mapView, MapPoint.mapPointWithGeoCoord(storeLatitude, storeLongitude), store_name);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
