@@ -2,7 +2,6 @@ package com.dayeong.seatmanagementsystem;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -17,9 +16,9 @@ import org.json.JSONObject;
 public class SeatAvailabilityActivity extends AppCompatActivity implements AsyncResponse {
 
     GetStoreDB task;
-    FloatingActionButton fabSecond, fabThird;
-    String url = "http://175.126.112.111/appdata.php";
-    boolean fabOpen = false;
+    // FloatingActionButton fabSecond, fabThird;
+    String url = "http://175.126.112.111/tablestatus.php";
+    // boolean fabOpen = false;
     String storeName;
 
     @Override
@@ -32,7 +31,7 @@ public class SeatAvailabilityActivity extends AppCompatActivity implements Async
         Bundle bundle = getIntent().getExtras();
         storeName = bundle.getString("storeName");
 
-        FloatingActionButton fabRefresh = (FloatingActionButton) findViewById(R.id.fab_refresh);
+    /*    FloatingActionButton fabRefresh = (FloatingActionButton) findViewById(R.id.fab_refresh);
         fabRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,7 +39,8 @@ public class SeatAvailabilityActivity extends AppCompatActivity implements Async
             }
         });
 
-        fabSecond = (FloatingActionButton) findViewById(R.id.fab_second);
+
+      fabSecond = (FloatingActionButton) findViewById(R.id.fab_second);
         fabThird = (FloatingActionButton) findViewById(R.id.fab_third);
 
         FloatingActionButton fabFloor = (FloatingActionButton) findViewById(R.id.fab_Floor);
@@ -63,7 +63,7 @@ public class SeatAvailabilityActivity extends AppCompatActivity implements Async
 
                 fabOpen = !fabOpen;
             }
-        });
+        }); */
 
         executeDB();
 

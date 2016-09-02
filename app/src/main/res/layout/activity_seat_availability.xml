@@ -24,7 +24,7 @@
 
     <include layout="@layout/content_seat_availability" />
 
-    <android.support.design.widget.FloatingActionButton
+     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,6 +36,6 @@
         app:layout_anchor="@+id/toolbar_seat"
         app:layout_anchorGravity="bottom|right|end" />
 
-    <include layout="@layout/floor_fab_layout" />
+    <!-- <include layout="@layout/floor_fab_layout" /> -->
 
 </android.support.design.widget.CoordinatorLayout>
