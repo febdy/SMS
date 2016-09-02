@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
     String url = "http://175.126.112.111/storedata.php";
 
     ArrayList<String> storeNameList = new ArrayList<>();
+    ArrayList<StoreInfo> storeInfoList = new ArrayList<>();
     MapView mapView;
     String storeName;
     double latitude = 0;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
             @Override
             public void onClick(View view) {
                 getGps(mapView);
+                makeMarker(mapView);
             }
         });
 
@@ -91,15 +93,20 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
         mapView.addPOIItem(marker);
     }
 
-    public void makeMarker(MapView mapView, MapPoint mapPoint, String name) {
-        MapPOIItem marker = new MapPOIItem();
-        marker.setItemName(name);
-        marker.setTag(1);
-        marker.setMapPoint(mapPoint);
-        marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
-        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+    public void makeMarker(MapView mapView) {
+        for(int i = 0; i < storeInfoList.size(); i++){
+            StoreInfo storeInfo = storeInfoList.get(i);
+            MapPoint mapPoint =  MapPoint.mapPointWithGeoCoord(storeInfo.getLatitude(), storeInfo.getLongitude());
 
-        mapView.addPOIItem(marker);
+            MapPOIItem marker = new MapPOIItem();
+            marker.setItemName(storeInfo.getStoreName());
+            marker.setTag(1);
+            marker.setMapPoint(mapPoint);
+            marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+            marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+
+            mapView.addPOIItem(marker);
+        }
     }
 
     @Override
@@ -203,10 +210,12 @@ public class MainActivity extends AppCompatActivity implements MapView.POIItemEv
                 store_name = jsonObject.getString("store_name");
                 storeLatitude = jsonObject.getDouble("latitude");
                 storeLongitude = jsonObject.getDouble("longitude");
+                StoreInfo storeInfo = new StoreInfo(store_name, storeLatitude, storeLongitude);
 
                 storeNameList.add(store_name);
-                makeMarker(mapView, MapPoint.mapPointWithGeoCoord(storeLatitude, storeLongitude), store_name);
+                storeInfoList.add(storeInfo);
             }
+            makeMarker(mapView);
 
         } catch (JSONException e) {
             e.printStackTrace();
