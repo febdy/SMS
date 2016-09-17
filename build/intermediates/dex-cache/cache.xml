@@ -1,3 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="3e3350288579af499b5b987c23bf8e68fb73da0c">
+        <dex dex="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_b5ee86b7c552c5557f7f153aff48072e23b37e58\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\libs\libDaumMapAndroid.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="a2ca14c67023cf9dfb7f79261593e4c014675ac6">
+        <dex dex="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\transforms\dex\debug\folders\1000\2\libDaumMapAndroid_688cbebe9c9c53c3e0cce416e2bf1e96a2a822f4\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\24.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="894922f67adeaaef51f077a29e315da21a3382d3">
+        <dex dex="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-24.0.0_14b9124c39980607e13cda02bc20db3da4fa93fa\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="3bd97cfefd783e9de1dd1c30574a6adb44b4409b">
+        <dex dex="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.0.0_392a80be3145352e11357d68926c5687829e5a17\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.0.0\jars\libs\internal_impl-24.0.0.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="fcaf463e10e69c1923ccf1edeba3b4196d239e00">
+        <dex dex="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.0.0_cd5b946841ab92a4c48de421f88db9d613c9af07\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="0874286cc2fd88d54fdf130e9d5372730da6de97">
+        <dex dex="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-24.0.0_e1e17d7f02ccd67347d3dafb451df1e57dec986a\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="e70f608219ed6b974644c333249ab2bb7b71de98">
+        <dex dex="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.0.0_9542a48de4ced6a11293bded9b754a8df3544120\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="99772bfa5cbc0011d249b58963ba0306f111853f">
+        <dex dex="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_a54909cd1e2e523b1e92de75f88246f52d36b9ac\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\exploded-aar\com.android.support\design\24.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="fc29308a7a8f6d4407b34634eb48fb8b817f9b23">
+        <dex dex="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-24.0.0_c499be37b720975694075f9eaa92aebdcd08b849\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Dayeong\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.0.0\support-annotations-24.0.0.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="2943c74db6d4346ab8c6531adac91fa05c137c40">
+        <dex dex="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.0.0_a2e9d6b86a89af034d92f91cb194621c135cd518\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="2f7e6e2dad1bccaf68a8820820adc6c0d5b96d37">
+        <dex dex="C:\Users\Dayeong\AndroidStudioProjects\SeatManagementSystem\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-24.0.0_ab942b9f24e1dc9ed0ec704b959ac983dc125441\classes.dex" />
+    </item>
+
+</items>

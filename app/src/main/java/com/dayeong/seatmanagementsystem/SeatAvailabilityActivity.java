@@ -1,11 +1,11 @@
 package com.dayeong.seatmanagementsystem;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -118,18 +118,23 @@ public class SeatAvailabilityActivity extends AppCompatActivity implements Async
                     int tableStatus = storeInfo.getTablesStatus()[i];
                     String btnID = "btn_table_" + i;
                     int resID = getApplicationContext().getResources().getIdentifier(btnID, "id", "com.dayeong.seatmanagementsystem");
-                    Button btnTable = (Button) findViewById(resID);
+                    Log.d("르고르고", String.valueOf(resID));
+                    ImageView imgTable = (ImageView) findViewById(resID);
+                    int imgResID = 0;
 
                     if (tableStatus == 1) {
-                        available += 1;
-                        btnTable.setBackgroundColor(Color.RED);
+                        imgResID = getResources().getIdentifier("c_"+i, "drawable", "com.dayeong.seatmanagementsystem");
+                        imgTable.setImageResource(imgResID);
                     } else if (tableStatus == 0) {
-                        btnTable.setBackgroundColor(Color.GREEN);
+                        available += 1;
+                        imgResID = getResources().getIdentifier("f_"+i, "drawable", "com.dayeong.seatmanagementsystem");
+                        imgTable.setImageResource(imgResID);
                     } else {
-                        btnTable.setBackgroundColor(Color.YELLOW);
+                        imgResID = getResources().getIdentifier("t_"+i, "drawable", "com.dayeong.seatmanagementsystem");
+                        imgTable.setImageResource(imgResID);
                     }
 
-                    btnTable.setVisibility(View.VISIBLE);
+                    imgTable.setVisibility(View.VISIBLE);
                 }
 
                 TextView tableAvailable = (TextView) findViewById(R.id.table_available);
