@@ -3,7 +3,6 @@ package com.dayeong.seatmanagementsystem;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -118,12 +117,11 @@ public class SeatAvailabilityActivity extends AppCompatActivity implements Async
                     int tableStatus = storeInfo.getTablesStatus()[i];
                     String btnID = "btn_table_" + i;
                     int resID = getApplicationContext().getResources().getIdentifier(btnID, "id", "com.dayeong.seatmanagementsystem");
-                    Log.d("르고르고", String.valueOf(resID));
                     ImageView imgTable = (ImageView) findViewById(resID);
                     int imgResID = 0;
 
                     if (tableStatus == 1) {
-                        imgResID = getResources().getIdentifier("c_"+i, "drawable", "com.dayeong.seatmanagementsystem");
+                        imgResID = getResources().getIdentifier("t_"+i, "drawable", "com.dayeong.seatmanagementsystem");
                         imgTable.setImageResource(imgResID);
                     } else if (tableStatus == 0) {
                         available += 1;
